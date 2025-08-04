@@ -1,5 +1,7 @@
 class Solution {
 private:
+    
+
     struct Compare {
         bool operator()(const pair<int, int>& a, const pair<int, int>& b) {
             // Max heap based on difference, and if tie, max value comes first
@@ -12,19 +14,18 @@ private:
 public:
     vector<int> findClosestElements(vector<int>& arr, int k, int x) {
         priority_queue<pair<int, int>, vector<pair<int, int>>, Compare> pq;
-        
-        for (int num : arr) {
-            pq.push({abs(num - x), num});
-            if (pq.size() > k) pq.pop();  // remove farthest
+        int n = arr.size();
+        for(int i = 0; i < n; i ++) {
+            pq.push({abs(arr[i]-x), arr[i]});
+            if(!pq.empty() && pq.size() > k) pq.pop();
         }
 
         vector<int> ans;
-        while (!pq.empty()) {
-            ans.push_back(pq.top().second);
-            pq.pop();
+        while(!pq.empty()) {
+            auto it = pq.top();pq.pop();
+            ans.emplace_back(it.second);
         }
-
-        sort(ans.begin(), ans.end());  // final result should be sorted
+        sort(ans.begin(), ans.end());
         return ans;
     }
 };
