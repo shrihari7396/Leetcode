@@ -1,3 +1,5 @@
-# Write your MySQL query statement below
-
-select w.id from Weather w join Weather w1 on datediff(w.recordDate , w1.recordDate) = 1 and w.temperature > w1.temperature;
+SELECT w.id
+FROM Weather w
+JOIN Weather w1 
+  ON w.recordDate = DATE_ADD(w1.recordDate, INTERVAL 1 DAY)
+WHERE w.temperature > w1.temperature;
