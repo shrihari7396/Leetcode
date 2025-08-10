@@ -1,36 +1,17 @@
 class Solution {
 private:
-    bool isPowerOfTwo(int n) {
-        int cnt = 0;
-        while(n > 0) {
-            if(n&1) cnt ++;
-            n = n >> 1;
-        }
-        return cnt == 1;
-    }
-
-    string vecToS(vector<char>& ch) {
-        string s = "";
-        for(char& c : ch) {
-            s += c;
-        }
+    string sortDigits(int num) {
+        string s = to_string(num);
+        sort(s.begin(), s.end());
         return s;
     }
 
 public:
     bool reorderedPowerOf2(int n) {
-        vector<char> ch;
-        string s = to_string(n);
-        for(char& c : s) {
-            ch.emplace_back(c);
+        string sortedN = sortDigits(n);
+        for (int i = 0; i < 31; i++) { // 2^0 to 2^30 fits in int
+            if (sortedN == sortDigits(1 << i)) return true;
         }
-
-        sort(ch.begin(), ch.end());
-        do {
-            if(ch[0] == '0') continue;
-            int num = stoi(vecToS(ch));
-            if(isPowerOfTwo(num)) return true;
-        } while(next_permutation(ch.begin(), ch.end()));
         return false;
     }
 };
