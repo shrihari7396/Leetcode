@@ -1,26 +1,44 @@
 class Solution {
 public:
     int thirdMax(vector<int>& nums) {
-        // Sort the array in non-increasing order.
-        sort(nums.begin(), nums.end(), greater<int>());
+        priority_queue<int, vector<int>, greater<int>> minHeap;
+        unordered_set<int> taken;
         
-        int elemCounted = 1;
-        int prevElem = nums[0];
-        
-        for (int index = 1; index < nums.size(); ++index) {
-            // Current element is different from previous.
-            if (nums[index] != prevElem) {
-                elemCounted += 1;
-                prevElem = nums[index];
+        for (int index = 0; index < nums.size(); ++index) {
+            // If current number was already taken, skip it.
+            if (taken.count(nums[index])) {
+                continue;
             }
             
-            // If we have counted 3 numbers then return current number.
-            if (elemCounted == 3) {
-                return nums[index];
+            // If min heap already has three numbers in it.
+            // Pop the smallest if current number is bigger than it.
+            if (minHeap.size() == 3) {
+                if (minHeap.top() < nums[index]) {
+                    taken.erase(minHeap.top());
+                    minHeap.pop();
+                    
+                    minHeap.push(nums[index]);
+                    taken.insert(nums[index]);
+                }
+            } 
+            // If min heap does not have three numbers we can push it.
+            else {
+                minHeap.push(nums[index]);
+                taken.insert(nums[index]);
             }
         }
         
-        // We never counted 3 distinct numbers, return largest number.
-        return nums[0];
+        // 'nums' has only one distinct element it will be the maximum.
+        if (minHeap.size() == 1) {
+            return minHeap.top();
+        }
+        // 'nums' has two distinct elements.
+        else if (minHeap.size() == 2) {
+            int firstNum = minHeap.top();
+            minHeap.pop();
+            return max(firstNum, minHeap.top());
+        }
+        
+        return minHeap.top();
     }
 };
