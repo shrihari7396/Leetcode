@@ -4,7 +4,7 @@ public:
         if(x == 0) return 0;
         if(x == 1) return 1;
         int highest = x / 2;
-        int low = 1;int high = x;
+        int low = 1;int high = highest;
         int mid = 0;
         while(low <= high) {
             mid = low + (high - low)/2;
