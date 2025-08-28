@@ -5,6 +5,7 @@ public:
         unordered_map<int, int> m;
         for(auto& it : nums) {
             m[it]++;
+            if(m[it] == 3) m.erase(it);
         }
 
         for(auto& it:m) {
