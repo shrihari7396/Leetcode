@@ -3,6 +3,7 @@ public:
     int singleNumber(vector<int>& nums) {
         int n = nums.size();
         unordered_map<int, int> m;
+        sort(nums.begin(), nums.end());
         for(auto& it : nums) {
             m[it]++;
             if(m[it] == 3) m.erase(it);
