@@ -2,18 +2,12 @@ class Solution {
 public:
     int singleNumber(vector<int>& nums) {
         int n = nums.size();
-        unordered_map<int, int> m;
         sort(nums.begin(), nums.end());
-        for(auto& it : nums) {
-            m[it]++;
-            if(m[it] == 3) m.erase(it);
-        }
-
-        for(auto& it:m) {
-            if(it.second == 1) {
-                return it.first;
+        for(int i = 1; i < n; i+=3) {
+            if(nums[i] != nums[i-1]) {
+                return nums[i-1];
             }
         }
-        return -1;
+        return nums[n-1];
     }
 };
