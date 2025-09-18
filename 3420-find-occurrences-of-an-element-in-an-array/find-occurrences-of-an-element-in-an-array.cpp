@@ -16,10 +16,6 @@ public:
                 ans.emplace_back(hash[it-1]);
             }
         }
-
-        for(int i = 0; i < hash.size(); i++) {
-            cout << hash[i] << " ";
-        }
         return ans;
     }
 };
