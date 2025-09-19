@@ -3,14 +3,13 @@ private:
     long long calculateHrs(vector<int>& piles, int k) {
         long long hrs = 0;
         for(int it : piles) {
-            hrs += (it + k - 1) / k;
+            hrs += ceil((it*1.00)/k);
         }
         return hrs;
     }
 
 public:
     int minEatingSpeed(vector<int>& piles, int h) {
-        // int low = *min_element(piles.begin(), piles.end());
         long long low = 1;
         long long high = *max_element(piles.begin(), piles.end());
 
