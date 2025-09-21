@@ -8,8 +8,8 @@ public:
 
         double avg = (sum * 1.0) / nums.size();
 
-        int ans = floor(avg) + 1; // strictly greater than avg
-        if (ans <= 0) ans = 1;    // must be positive
+        int ans = floor(avg) + 1;
+        if (ans <= 0) ans = 1;
 
         while (true) {
             if (s.find(ans) == s.end()) {
