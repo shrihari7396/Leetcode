@@ -1,20 +1,14 @@
 class Solution {
 public:
     vector<int> recoverOrder(vector<int>& order, vector<int>& friends) {
-        unordered_map<int, int> m;
-        for(int i = 0; i < order.size(); i++) {
-            m[order[i]] = i;
+    unordered_set<int> friendSet(friends.begin(), friends.end());
+    vector<int> ans;
+    for (auto& x : order) {
+        if (friendSet.count(x)) {
+            ans.push_back(x);
         }
-        vector<pair<int, int>> list;
-        for(auto& it : friends) {
-            int pos = m[it];
-            list.push_back({pos, it});
-        }
-        sort(list.begin(), list.end());
-        vector<int> ans;
-        for(auto& it : list) {
-            ans.emplace_back(it.second);
-        }
-        return ans;
     }
+    return ans;
+}
+
 };
