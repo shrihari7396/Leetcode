@@ -18,6 +18,6 @@ public:
             ans++;
         }
 
-        return -1; // should never happen
+        return -1;
     }
 };
