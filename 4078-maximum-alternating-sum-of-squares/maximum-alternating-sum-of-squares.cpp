@@ -4,7 +4,6 @@ public:
         sort(nums.begin(), nums.end(), [](int a, int b) {
             return abs(a) < abs(b);
         });
-
         int i = 0, j = nums.size() - 1;
         long long sum = 0;
         while (i <= j) {
