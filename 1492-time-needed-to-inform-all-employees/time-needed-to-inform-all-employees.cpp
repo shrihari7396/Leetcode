@@ -17,9 +17,10 @@ public:
         while(!q.empty()) {
             auto [node, currTime] = q.front();
             q.pop();
-            timeRequired = max(timeRequired, currTime);
+            int newTime = currTime + informTime[node];
+            timeRequired = max(timeRequired, newTime);
             for (int sub : adj[node]) {
-                q.push({sub, currTime + informTime[node]});
+                q.push({sub, newTime});
             }
         }
         return timeRequired;
