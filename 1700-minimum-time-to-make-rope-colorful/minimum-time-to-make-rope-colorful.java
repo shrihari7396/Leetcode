@@ -1,10 +1,7 @@
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 class Solution {
-    private static class Pair <T,V> {
+    private static class Pair<T, V> {
         public T first;
         public V second;
         Pair(T first, V second) {
@@ -12,24 +9,24 @@ class Solution {
             this.second = second;
         }
     }
+
     public int minCost(String colors, int[] neededTime) {
         List<Pair<Integer, Integer>> subarrays = new ArrayList<>();
-        int  i = 0;
-        int j = i+1;
-        int n = colors.length();
-        while (i < n && j < n) {
-            if(colors.charAt(i) == colors.charAt(j)) {
+        int i = 0, j = 1, n = colors.length();
+
+        while (j < n) {
+            if (colors.charAt(i) == colors.charAt(j)) {
                 j++;
             } else {
-                subarrays.add(new Pair<>(i, j-1));
+                subarrays.add(new Pair<>(i, j - 1));
                 i = j;
+                j = i + 1;
             }
         }
-        if(i != j) {
-            subarrays.add(new Pair<>(i, j-1));
-        }
+        subarrays.add(new Pair<>(i, j - 1)); // add last group
+
         int ans = 0;
-        for(Pair<Integer, Integer> p : subarrays) {
+        for (Pair<Integer, Integer> p : subarrays) {
             ans += process(p, neededTime);
         }
         return ans;
@@ -37,11 +34,11 @@ class Solution {
 
     private int process(Pair<Integer, Integer> p, int[] neededTime) {
         PriorityQueue<Integer> pq = new PriorityQueue<>();
-        for(int i  = p.first; i <= p.second; i++) {
+        for (int i = p.first; i <= p.second; i++) {
             pq.add(neededTime[i]);
         }
         int sum = 0;
-        while (pq.size()!=1) {
+        while (pq.size() > 1) {
             sum += pq.poll();
         }
         return sum;
