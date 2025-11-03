@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int minCost(string colors, vector<int>& neededTime) {
+    int minCost(string colors, vector<int> neededTime) {
         int total = 0;
         int maxTime = neededTime[0];
 
