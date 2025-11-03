@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 class Solution {
     private static class Pair<T, V> {
@@ -11,36 +12,39 @@ class Solution {
     }
 
     public int minCost(String colors, int[] neededTime) {
+        int n = colors.length();
         List<Pair<Integer, Integer>> subarrays = new ArrayList<>();
-        int i = 0, j = 1, n = colors.length();
 
-        while (j < n) {
-            if (colors.charAt(i) == colors.charAt(j)) {
+        int i = 0;
+        while (i < n) {
+            int j = i;
+            while (j + 1 < n && colors.charAt(i) == colors.charAt(j + 1)) {
                 j++;
-            } else {
-                subarrays.add(new Pair<>(i, j - 1));
-                i = j;
-                j = i + 1;
             }
+            if (j > i) { // only if there’s a group
+                subarrays.add(new Pair<>(i, j));
+            }
+            i = j + 1;
         }
-        subarrays.add(new Pair<>(i, j - 1)); // add last group
+
+        int[] prefixSum = new int[n + 1];
+        for (int k = 0; k < n; k++) {
+            prefixSum[k + 1] = prefixSum[k] + neededTime[k];
+        }
 
         int ans = 0;
         for (Pair<Integer, Integer> p : subarrays) {
-            ans += process(p, neededTime);
+            ans += process(p, prefixSum, neededTime);
         }
         return ans;
     }
 
-    private int process(Pair<Integer, Integer> p, int[] neededTime) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
+    private int process(Pair<Integer, Integer> p, int[] prefixSum, int[] neededTime) {
+        int sum = prefixSum[p.second + 1] - prefixSum[p.first];
+        int maxVal = 0;
         for (int i = p.first; i <= p.second; i++) {
-            pq.add(neededTime[i]);
+            maxVal = Math.max(maxVal, neededTime[i]);
         }
-        int sum = 0;
-        while (pq.size() > 1) {
-            sum += pq.poll();
-        }
-        return sum;
+        return sum - maxVal;
     }
 }
