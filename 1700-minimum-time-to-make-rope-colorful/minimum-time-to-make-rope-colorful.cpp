@@ -3,50 +3,47 @@ using namespace std;
 
 class Solution {
 private:
-    template <typename T, typename V>
     struct Pair {
-        T first;
-        V second;
-        Pair(T f, V s) : first(f), second(s) {}
+        int first, second;
+        Pair(int f, int s) : first(f), second(s) {}
     };
 
-    int process(Pair<int, int> p, const vector<int>& neededTime) {
-        priority_queue<int, vector<int>, greater<int>> pq; // min-heap
+    int process(const Pair& p, const vector<int>& prefixSum, const vector<int>& neededTime) {
+        int sum = prefixSum[p.second + 1] - prefixSum[p.first];
+        int maxVal = 0;
         for (int i = p.first; i <= p.second; i++) {
-            pq.push(neededTime[i]);
+            maxVal = max(maxVal, neededTime[i]);
         }
-        int sum = 0;
-        while (pq.size() != 1) {
-            sum += pq.top();
-            pq.pop();
-        }
-        return sum;
+        return sum - maxVal;
     }
 
 public:
     int minCost(string colors, vector<int>& neededTime) {
-        vector<Pair<int, int>> subarrays;
-        int i = 0;
-        int j = i + 1;
         int n = colors.size();
+        vector<Pair> subarrays;
 
-        while (i < n && j < n) {
-            if (colors[i] == colors[j]) {
-                j++;
-            } else {
-                subarrays.emplace_back(i, j - 1);
-                i = j;
+        int i = 0;
+        while (i < n) {
+            int j = i;
+            while (j + 1 < n && colors[i] == colors[j + 1]) {
                 j++;
             }
+            if (j > i) { // group found
+                subarrays.emplace_back(i, j);
+            }
+            i = j + 1;
         }
-        if (i != j) {
-            subarrays.emplace_back(i, j - 1);
+
+        vector<int> prefixSum(n + 1, 0);
+        for (int k = 0; k < n; k++) {
+            prefixSum[k + 1] = prefixSum[k] + neededTime[k];
         }
 
         int ans = 0;
         for (auto& p : subarrays) {
-            ans += process(p, neededTime);
+            ans += process(p, prefixSum, neededTime);
         }
+
         return ans;
     }
 };
