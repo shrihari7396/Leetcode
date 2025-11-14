@@ -5,7 +5,6 @@ private:
             ans.insert(curr);
             return;
         }
-
         vector<char> temp = m[s[i]];
         for(auto& it : temp) {
             dfs(i+1, s, n, ans, curr + it, m);
