@@ -1,29 +1,31 @@
 class Solution {
 private:
-    void dfs(int i, string s, int n, unordered_set<string>& ans, string curr, unordered_map<char, vector<char>>& m) {
-        if(i == n) {
-            ans.insert(curr);
+    const vector<string> keys = {
+        "", "", "abc", "def", "ghi", "jkl", 
+        "mno", "pqrs", "tuv", "wxyz"
+    };
+
+    void dfs(int idx, const string& digits, string& curr, vector<string>& ans) {
+        if (idx == digits.size()) {
+            ans.push_back(curr);
             return;
         }
-        vector<char> temp = m[s[i]];
-        for(auto& it : temp) {
-            dfs(i+1, s, n, ans, curr + it, m);
+
+        int d = digits[idx] - '0';
+        for (char c : keys[d]) {
+            curr.push_back(c);            // choose
+            dfs(idx + 1, digits, curr, ans);
+            curr.pop_back();              // backtrack
         }
     }
+
 public:
     vector<string> letterCombinations(string digits) {
-        unordered_map<char, vector<char>> m;
-        unordered_set<string> ans;
-        m['2'] = {'a', 'b', 'c'};
-        m['3'] = {'d', 'e', 'f'};
-        m['4'] = {'g', 'h', 'i'};
-        m['5'] = {'j', 'k', 'l'};
-        m['6'] = {'m', 'n', 'o'};
-        m['7'] = {'p', 'q', 'r', 's'};
-        m['8'] = {'t', 'u', 'v'};
-        m['9'] = {'w', 'x', 'y', 'z'};
-        int n = digits.size();
-        dfs(0, digits, n, ans, "", m);
-        return vector<string>(ans.begin(), ans.end());
+        if (digits.empty()) return {};
+
+        vector<string> ans;
+        string curr;
+        dfs(0, digits, curr, ans);
+        return ans;
     }
 };
