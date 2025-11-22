@@ -2,13 +2,13 @@ class Solution {
 private:
     int solve(int n, vector<int>& edges) {
         vector<long long> inDegrees(n, 0);
+        long long maxi = 0;
 
         for (int i = 0; i < n; i++) {
             int v = edges[i];
             inDegrees[v] += i;
+            maxi = max(maxi, inDegrees[v]);
         }
-
-        long long maxi = *max_element(inDegrees.begin(), inDegrees.end());
 
         for (int it = 0; it < n; it++) {
             if (inDegrees[it] == maxi) {
