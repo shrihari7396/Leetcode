@@ -6,7 +6,7 @@ public:
 
         for(int i = 0; i < nums.size(); i++) {
             current = (current * 2 + nums[i]) % 5;  
-            ans[i] = (current == 0);
+            ans[i] = (current == 0);    
         }
 
         return ans;
