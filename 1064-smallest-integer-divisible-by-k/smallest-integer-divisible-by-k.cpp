@@ -1,13 +1,17 @@
 class Solution {
 public:
     int smallestRepunitDivByK(int k) {
+        // impossible cases
         if (k % 2 == 0 || k % 5 == 0) return -1;
 
-        int rem = 0;
-        for (int len = 1; len <= k; len++) {
-            rem = (rem * 10 + 1) % k;
-            if (rem == 0) return len;
+        int check = 1 % k;   // remainder of current repunit
+        int length = 1;      // current length
+
+        while (check != 0) {
+            check = (check * 10 + 1) % k;   // append '1'
+            length++;
         }
-        return -1;
+
+        return length;
     }
 };
