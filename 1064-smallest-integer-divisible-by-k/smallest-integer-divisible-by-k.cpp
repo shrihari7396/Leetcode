@@ -1,12 +1,10 @@
 class Solution {
 public:
-    int smallestRepunitDivByK(int K) {
-        int remainder = 0;
-        for (int length_N = 1; length_N <= K; length_N++) {
-            remainder = (remainder * 10 + 1) % K;
-            if (remainder == 0) {
-                return length_N;
-            }
+    int smallestRepunitDivByK(int k) {
+        int ans = 0;
+        for(int i = 1; i <= k; i++) {
+            ans = (ans*10+1) % k;
+            if(ans == 0) return i;
         }
         return -1;
     }
