@@ -1,16 +1,13 @@
 class Solution {
 public:
-    int smallestRepunitDivByK(int k) {
-        if (k % 2 == 0 || k % 5 == 0) return -1;
-
-        int check = 1 % k;
-        int length = 1;
-
-        while (check != 0) {
-            check = (check * 10 + 1) % k;
-            length++;
+    int smallestRepunitDivByK(int K) {
+        int remainder = 0;
+        for (int length_N = 1; length_N <= K; length_N++) {
+            remainder = (remainder * 10 + 1) % K;
+            if (remainder == 0) {
+                return length_N;
+            }
         }
-
-        return length;
+        return -1;
     }
 };
