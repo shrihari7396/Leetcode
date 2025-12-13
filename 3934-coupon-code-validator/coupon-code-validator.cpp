@@ -33,7 +33,6 @@ public:
         vector<pair<string, string>> valid;
         for (int i = 0; i < n; i++) {
             if (isActive[i] && first(code[i]) && second(businessLine[i], priority)) {
-
                 valid.push_back({businessLine[i], code[i]});
             }
         }
