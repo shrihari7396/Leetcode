@@ -6,7 +6,7 @@ private:
 
         for (char it : s) {
             if (!((it >= 'a' && it <= 'z') || (it >= 'A' && it <= 'Z') ||
-                  (it >= '0' && it <= '9') || // allow digits
+                  (it >= '0' && it <= '9') ||
                   (it == '_'))) {
                 return false;
             }
@@ -14,9 +14,8 @@ private:
         return true;
     }
 
-    bool second(const string& s) {
-        return s == "electronics" || s == "grocery" || s == "pharmacy" ||
-               s == "restaurant";
+    bool second(string& s, unordered_map<string, int>& m) {
+        return m.find(s) != m.end();
     }
 
 public:
@@ -33,7 +32,7 @@ public:
 
         vector<pair<string, string>> valid;
         for (int i = 0; i < n; i++) {
-            if (isActive[i] && first(code[i]) && second(businessLine[i])) {
+            if (isActive[i] && first(code[i]) && second(businessLine[i], priority)) {
 
                 valid.push_back({businessLine[i], code[i]});
             }
