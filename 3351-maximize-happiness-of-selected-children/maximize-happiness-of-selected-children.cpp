@@ -7,12 +7,12 @@ public:
         int j = happiness.size() - 1;
 
         while (j >= 0 && k > 0) {
-            int val = happiness[j] - dec;
-            if (val <= 0) break;
-            ans += val;
+            int cal = happiness[j] - dec;
+            if(cal < 0) break;
+            ans += cal;
             dec++;
-            j--;
             k--;
+            j--;
         }
         return ans;
     }
