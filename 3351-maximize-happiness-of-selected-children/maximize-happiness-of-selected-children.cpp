@@ -7,9 +7,7 @@ public:
         int j = happiness.size() - 1;
 
         while (j >= 0 && k > 0) {
-            int cal = happiness[j] - dec;
-            if(cal < 0) break;
-            ans += cal;
+            ans += max(0, happiness[j] - dec);
             dec++;
             k--;
             j--;
